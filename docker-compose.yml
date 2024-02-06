@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  app:
+    build:
+      args:
+        user: nmbabor
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    #image: [image-name]
+    container_name: lara-simple-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html:cached
+    depends_on:
+      - db
+    networks:
+      - lara-simple-network
+  db:
+    image: mysql:8.0
+    container_name: lara-simple-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - lara-simple-network
+  nginx:
+    image: nginx:alpine
+    container_name: lara-simple-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www/html:cached
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - lara-simple-network
+networks:
+  lara-simple-network:
+    driver: bridge
