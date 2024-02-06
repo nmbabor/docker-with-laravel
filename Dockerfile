@@ -27,10 +27,11 @@ COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # RUN composer update
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
 
-
-
-
+USER $user
 
 # Change permissions of the vendor directory
 RUN chmod -R 775 /var/www/html/storage
