@@ -17,3 +17,5 @@ up:
 	docker compose up -d
 stop:
 	docker compose stop
+generate-key:
+	docker exec lara-simple-app bash -c "php artisan key:generate"
