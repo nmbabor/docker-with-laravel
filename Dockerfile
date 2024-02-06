@@ -28,8 +28,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # RUN composer update
 
-USER $user
-
 # Change permissions of the vendor directory
 RUN chmod -R 775 /var/www/html/storage
 # Run Composer dump-autoload to optimize autoloader
