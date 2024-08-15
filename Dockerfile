@@ -23,10 +23,21 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 # Copy project files and install dependencies using Composer
 COPY . .
+
+# Copy .env.example to .env
+RUN cp .env.example .env
+
 # Copy Composer binary from Composer official image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # RUN composer update
+
+
+# Install Laravel dependencies
+RUN composer install
+
+# Generate application key
+RUN php artisan key:generate
 
 # Change permissions of the vendor directory
 RUN chmod -R 775 /var/www/html/storage
