@@ -31,3 +31,7 @@ generate-key:
 copy-env:
 	@echo "Copy env from env.example ..."
 	docker exec lara-simple-app bash -c "cp .env.example .env"
+
+migrate:
+	@echo "Run database migration ..."
+	docker exec lara-simple-app bash -c "php artisan migrate"
