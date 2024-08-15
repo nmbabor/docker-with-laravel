@@ -1,66 +1,86 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Dockerized Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a Laravel application configured to run in a Dockerized environment. The setup includes Nginx, MySQL, and PHP, managed via Docker Compose.
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Ensure you have the following installed on your local machine:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Make](https://www.gnu.org/software/make/)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Setup Instructions
 
-## Learning Laravel
+Follow the steps below to set up and run the project.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Step 1: Clone the Repository
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+First, clone the repository to your local machine:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone https://github.com/yourusername/your-laravel-project.git
+cd your-laravel-project
+```
+### Step 2: Build and Run the Docker Containers
+Use the provided `Makefile` to automate the setup process.
 
-## Laravel Sponsors
+Run the following command to build and start the Docker containers, install dependencies, set permissions, copy the environment file, and generate the application key:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+make setup
+```
+This command runs the following steps automatically:
 
-### Premium Partners
+#### 1. Build the Docker containers:
+Builds the Docker image for the Laravel application.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### 2. Start the containers:
+Starts the Docker containers in detached mode.
 
-## Contributing
+#### 3. Install/Update Composer dependencies:
+Installs or updates the dependencies specified in composer.json.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### 4. Set file permissions:
+Adjusts the permissions for the storage directory to ensure Laravel can write to it.
 
-## Code of Conduct
+#### 5. Copy the .env file:
+Copies the .env.example to .env.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### 5. Generate the application key:
+Generates the Laravel application key.
 
-## Security Vulnerabilities
+### Step 3: Access the Application
+Once the setup is complete, you can access the Laravel application in your browser at:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+http://localhost
+```
+### Step 4: Stopping the Containers
+To stop the Docker containers, run:
 
-## License
+```bash
+make stop
+```
+### Additional Makefile Commands
+The `Makefile` also includes the following commands:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* `make build`: Builds the Docker images.
+* `make composer-update`: Runs composer update inside the Docker container.
+* `make composer-install`: Runs composer install inside the Docker container.
+* `make permission`: Sets the permissions for the storage directory.
+* `make up`: Starts the Docker containers in detached mode.
+* `make stop`: Stops the Docker containers.
+* `make generate-key`: Generates a new application key for Laravel.
+* `make copy-env`: Copies .env.example to .env.
+
+### Troubleshooting
+If you encounter any issues during setup or while running the project, try the following:
+
+* Ensure Docker and Docker Compose are installed and running.
+* Check for any container-specific issues by running `docker logs <container_name>`.
+* If file permission issues occur, re-run `make permission`.
+
+### Summary
+This `README.md` file provides clear and concise instructions on how to set up and run this Dockerized Laravel project using the `Makefile`. It covers all the necessary steps and includes additional commands for managing the project. Adjust the URLs, paths, and commands as needed to fit your specific project setup.
+
