@@ -83,4 +83,5 @@ If you encounter any issues during setup or while running the project, try the f
 
 ### Summary
 This `README.md` file provides clear and concise instructions on how to set up and run this Dockerized Laravel project using the `Makefile`. It covers all the necessary steps and includes additional commands for managing the project. Adjust the URLs, paths, and commands as needed to fit your specific project setup.
-
+### Dockerizing a Laravel Project from Scratch
+If you're interested in learning how to dockerize a Laravel project from scratch, you can follow the step-by-step guide in the [Docker.md](Docker.md) file.
