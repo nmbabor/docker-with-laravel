@@ -5,6 +5,7 @@ setup:
 	@make permission
 	@make copy-env
 	@make generate-key
+	@make storage-link
 
 build:
 	docker compose build
@@ -35,3 +36,7 @@ copy-env:
 migrate:
 	@echo "Run database migration ..."
 	docker exec lara-simple-app bash -c "php artisan migrate"
+	
+storage-link:
+	@echo "Create a symbolic link at public/storage ..."
+	docker exec lara-simple-app bash -c "php artisan storage:link"
